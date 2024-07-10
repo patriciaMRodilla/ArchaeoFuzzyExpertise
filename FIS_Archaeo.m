@@ -27,6 +27,14 @@ fis = addmf(fis, 'input', 4, 'Low', 'trapmf', [0 0 0.3 0.5]);
 fis = addmf(fis, 'input', 4, 'Medium', 'trimf', [0.3 0.5 0.7]);
 fis = addmf(fis, 'input', 4, 'High', 'trapmf', [0.5 0.7 1 1]);
 
+% Membership functions for each type of defined USE
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Basilica');
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Roman Village');
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Fortification');
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Habitat');
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Farm');
+fis = addMF(fis, 'Use', 'gaussmf', [0.1 1], 'Name', 'Funeral Space');
+
 % Membership functions for each type of defined CHRONOLOGY
 fis = addMF(fis, 'Chronology', 'gaussmf', [0.1 1], 'Name', 'c1: Middle Ages');
 fis = addMF(fis, 'Chronology', 'gaussmf', [0.1 1], 'Name', 'c2: Late Middle Ages');
@@ -79,7 +87,7 @@ sites = {
     {[1, 1, 0, 0, 0, 0], [0, 0, 0.5, 0, 0, 1], [0.5, 0.5, 0, 0, 0, 0], [1, 1, 0.2, 0.2, 0.2, 0.2]},
     {[0, 0, 1, 0.25, 0, 0], [1, 0.5, 1, 0, 0, 0.25], [0.5, 0.4, 0.5, 0.3, 0.3, 0.3], [0.5, 0.5, 0.5, 0, 0, 0.5]},
     {[0, 0.75, 0, 0.8, 0.5, 0], [0, 0, 0, 0.75, 0.75, 0.75], [0, 1, 0, 1, 0.5, 0], [0, 0, 0, 0.4, 0.4, 0.25]},
-    {[0, 0, 0, 0.25, 0, 1], [0.4, 0, 1, 0.2, 0, 0.2], [0, 0, 0, 1, 0, 1], [0.3, 0.3, 1, 0.4, 0.2, 0.6]},
+    {[0, 0, 0, 0, 0, 1], [0.4, 0, 1, 0.2, 0, 0.2], [0, 0, 0, 1, 0, 1], [0.3, 0.3, 1, 0.4, 0.2, 0.6]},
 };
 
 % 8. 
@@ -97,7 +105,7 @@ for i = 1:length(sites)
     expertise_chron_centroid = calculate_centroid(Y_expertise_chron);
     
     input = [use_centroid, chron_centroid, expertise_use_centroid, expertise_chron_centroid];
-    fprintf(' YACIMIENTO %f: Centroides antes de tomar decision: [%f, %f, %f, %f]', i, use_centroid, chron_centroid, expertise_use_centroid, expertise_chron_centroid);
+    fprintf(' SITE %f: Centroids: [%f, %f, %f, %f]', i, use_centroid, chron_centroid, expertise_use_centroid, expertise_chron_centroid);
     output = evalfis(input, fis);
     
     results{i} = struct('use', Y_use, 'chronology', Y_chron, ...
@@ -174,7 +182,7 @@ for i = 1:length(results)
     bar(results{i}.expertise_chronology);
     title(sprintf('Chronology EXPERTISE - SITE %d', i));
     ylim([0 1]);
-    xlabel('Chronology EXPERTISE categories');
+    xlabel('Chronology expertise categories');
     ylabel('Membership degrees');
 end
 
