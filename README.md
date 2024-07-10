@@ -1,2 +1,4 @@
 # ArchaeoFuzzyExpertise
-Matlab work on archaeological fuzzy inference systems
+Matlab works on archaeological fuzzy inference systems for annotator's expertise management.
+
+
